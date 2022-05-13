@@ -1,0 +1,24 @@
+{
+  "icon": "lacework_icon.svg",
+  "host": {
+    "binaries": [
+      {
+        "darwin": [
+          {
+            "path": "/host/darwin/lw-scanner"
+          },
+          {
+            "path": "/host/darwin/config.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "ui": {
+    "dashboard-tab": {
+      "title": "Lacework Scanner",
+      "src": "index.html",
+      "root": "/ui"
+    }
+  }
+}
