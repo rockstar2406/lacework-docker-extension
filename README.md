@@ -8,11 +8,11 @@ For any recommendations, suggestions, feature requests and issue, head over the 
 
 ## Installing the Lacework Docker extension
 
-`docker extension install mennov/lacework-docker-extension:latest`
+`docker extension install lacework/lacework-docker-extension:latest`
 
 or, if the extension is already installed, you can easily upgrade with
 
-`docker extension update mennov/lacework-docker-extension:latest`
+`docker extension update lacework/lacework-docker-extension:latest`
 
 ## Build
 
