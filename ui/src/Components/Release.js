@@ -3,7 +3,7 @@ import semver from 'semver';
 
 function Release() {
   let [latestRelease,setLatestRelease] = useState("unknown")
-  let [currentRelease,setCurrentRelease] = useState("unknown"); //useState(semver.coerce(process.env.REACT_APP_RELEASE));
+  let [currentRelease,setCurrentRelease] = useState(process.env.REACT_APP_RELEASE||"unknown");
 
   useEffect(() => {
     let version = semver.coerce(process.env.REACT_APP_RELEASE);
@@ -12,14 +12,14 @@ function Release() {
     .then(result => result.json())
     .then(json => {
       if(json[0]) {
-        setLatestRelease(json[0].name||"unavailable");
+        setLatestRelease(json[0].tag_name||"unavailable");
       }
     })
   },[])
 
   function showCurrentRelease() {
     return (<span>
-      extension version: {semver.valid(currentRelease)?"v"+semver.valid(currentRelease):currentRelease}
+      extension version: {process.env.REACT_APP_RELEASE}
     </span>);
   }
 
