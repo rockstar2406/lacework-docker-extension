@@ -21,7 +21,7 @@
         ],
         "windows": [
           {
-            "path": "/host/windows/lw-scanner"
+            "path": "/host/windows/lw-scanner.exe"
           },
           {
             "path": "/host/scripts/config.cmd"

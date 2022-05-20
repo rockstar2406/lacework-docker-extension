@@ -41,5 +41,5 @@ COPY --from=client-builder /ui/build ui
 COPY host /host
 COPY --from=lwscanner /lw-scanner-darwin /host/darwin/lw-scanner
 COPY --from=lwscanner /lw-scanner-linux /host/linux/lw-scanner
-COPY --from=lwscanner /lw-scanner-windows /host/windows/lw-scanner
+COPY --from=lwscanner /lw-scanner-windows /host/windows/lw-scanner.exe
 CMD [ "sleep", "infinity" ]
