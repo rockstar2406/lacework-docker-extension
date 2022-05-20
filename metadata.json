@@ -25,6 +25,9 @@
           },
           {
             "path": "/host/scripts/config.cmd"
+          },
+          {
+            "path": "/host/scripts/config-reset.cmd"
           }
         ]
       }
