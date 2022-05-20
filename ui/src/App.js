@@ -25,6 +25,11 @@ function useDockerDesktopClient() {
     return client;
 }
 
+async function isWindows() {
+  let windowsSystem = navigator.platform.startsWith('Win');
+  return windowsSystem;
+}
+
 function App() {
   const ddClient = useDockerDesktopClient();
   let [version,setVersion] = useState("...")
@@ -34,13 +39,17 @@ function App() {
   let [scanResult,setScanResult] = useState({});
   
   async function getConfig() {
-    let output = await ddClient.extension.host.cli.exec("lw-scanner",["configure","view"]);
+    let cmd = "lw-scanner";
+    if(await isWindows()) cmd="lw-scanner.exe";
+    let output = await ddClient.extension.host.cli.exec(cmd,["configure","view"]);
     setConfig(JSON.parse(output.stdout.replace("Current config :","")));
   }
   
   useEffect(() => {
     async function getVersion() {
-      let output = await ddClient.extension.host.cli.exec("lw-scanner",["version"]);
+      let cmd = "lw-scanner";
+      if(await isWindows()) cmd="lw-scanner.exe";
+      let output = await ddClient.extension.host.cli.exec(cmd,["version"]);
       let scannerVersion = output.stdout.match(/scanner version: ([0-9.]+)/);
       if(scannerVersion) {
         utils.telemetry({event:"get-version",message:{version:scannerVersion[1]}})
@@ -52,14 +61,18 @@ function App() {
     }
     getVersion();
     async function getConfig() {
-      let output = await ddClient.extension.host.cli.exec("lw-scanner",["configure","view"]);
+      let cmd = "lw-scanner";
+      if(await isWindows()) cmd="lw-scanner.exe";
+      let output = await ddClient.extension.host.cli.exec(cmd,["configure","view"]);
       setConfig(JSON.parse(output.stdout.replace("Current config :","")));
     }
     getConfig();
   },[ddClient.extension.host.cli])
 
   async function handleReset() {
-    await ddClient.extension.host.cli.exec("config.sh",["reset"]);
+    let cmd = "config.sh";
+    if(await isWindows()) cmd="config-reset.cmd";
+    await ddClient.extension.host.cli.exec(cmd,["reset"]);
     window.location.reload();
   }
 

@@ -8,13 +8,21 @@ function useDockerDesktopClient() {
     return client;
 }
 
+function isWindows() {
+  let windowsSystem = navigator.platform.startsWith('Win');
+  return windowsSystem;
+}
+
 function ConfigToken(props) {
   let [account,setAccount] = useState("");
   let [token,setToken] = useState("");
   const ddClient = useDockerDesktopClient();
 
   function handleClick() {
-    ddClient.extension.host.cli.exec("config.sh",[account,token])
+    let cmd = "config.sh";
+    if(isWindows()) cmd="config.cmd";
+
+    ddClient.extension.host.cli.exec(cmd,[account,token])
     .then(() => {
       props?.onSuccess()
     })
