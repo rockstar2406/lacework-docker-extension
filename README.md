@@ -6,6 +6,10 @@ To use this extension, an active Lacework subscription is required with access t
 
 For any recommendations, suggestions, feature requests and issue, head over the the project's [GitHub Issues tracker](https://github.com/l6khq/lacework-docker-extension/issues).
 
+## Enabling Docker Extensions
+
+To install extensions not yet listed in the Docker Desktop extension market place, follow the instructions here (https://docs.docker.com/desktop/extensions-sdk/)[https://docs.docker.com/desktop/extensions-sdk/#prerequisites]
+
 ## Installing the Lacework Docker extension
 
 `docker extension install lacework/lacework-docker-extension:latest`
