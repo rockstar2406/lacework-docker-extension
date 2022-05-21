@@ -1,2 +1,2 @@
 @echo off
-lw-scanner configure reset
+lw-scanner.exe configure reset
