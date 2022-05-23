@@ -8,17 +8,26 @@ function useDockerDesktopClient() {
     return client;
 }
 
+function isWindows() {
+  let windowsSystem = navigator.platform.startsWith('Win');
+  return windowsSystem;
+}
+
 function ConfigToken(props) {
   let [account,setAccount] = useState("");
   let [token,setToken] = useState("");
   const ddClient = useDockerDesktopClient();
 
   function handleClick() {
-    ddClient.extension.host.cli.exec("config.sh",[account,token])
+    let cmd = "config.sh";
+    if(isWindows()) cmd="config.cmd";
+    console.log("windows: ",isWindows());
+    ddClient.extension.host.cli.exec(cmd,[account,token])
     .then(() => {
       props?.onSuccess()
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error(err);
       alert("Something went wrong");
     });
   }
