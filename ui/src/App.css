@@ -63,9 +63,6 @@
 .filters {
   margin-bottom: 1em;
 }
-.cve {
-  overflow: scroll;
-}
 
 .cve-table {
   width: 100%;
@@ -151,7 +148,7 @@
   font-size: 1.2em;
 }
 
-.chip-github {
+.chips-top {
   margin-bottom: 1em;
 }
 
@@ -164,4 +161,8 @@
 .btn-cve-layer {
   padding: 0 !important;
   min-width: 20px !important;
+}
+
+.btn-cve-bg-gray {
+  background-color: #AAAAAA !important;
 }

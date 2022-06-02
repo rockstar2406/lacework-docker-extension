@@ -74,6 +74,33 @@ function renderCVE(cve,showVulnerability) {
   )
 }
 
+function VulnCounts(props) {
+  let critical=props.critical||0;
+  let high=props.high||0;
+  let medium=props.medium||0;
+  let low=props.low||0;
+  let info=props.info||0;
+  return (
+    <ButtonGroup sx={{marginRight:'1em'}}>
+      <Button variant="contained" className={"btn-cve-layer btn-cve-Critical "+
+        (critical===0?"btn-cve-bg-gray ":null)}>{critical}
+      </Button>
+      <Button variant="contained" className={"btn-cve-layer btn-cve-High "+
+        (high===0?"btn-cve-bg-gray ":null)}>{high}
+      </Button>
+      <Button variant="contained" className={"btn-cve-layer btn-cve-Medium "+
+        (medium===0?"btn-cve-bg-gray ":null)}>{medium}
+      </Button>
+      <Button variant="contained" className={"btn-cve-layer btn-cve-Low "+
+        (low===0?"btn-cve-bg-gray ":null)}>{low}
+      </Button>
+      <Button variant="contained" className={"btn-cve-layer btn-cve-Info "+
+        (info===0?"btn-cve-bg-gray ":null)}>{info}
+      </Button>
+    </ButtonGroup>
+  );
+}
+
 function ScanResults(props) {
   let results = props.results?.results;
   const [cves,setCves] = useState([]);
@@ -257,14 +284,14 @@ function ScanResults(props) {
         {getNamespacesFromPackages(packages).map(ns => (
             <Accordion>
             <AccordionSummary>
-            <div>
-              <ButtonGroup sx={{marginRight:'1em'}}>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Critical">{vulnCount(packages.filter(p=>p.namespace===ns),"Critical")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-High">{vulnCount(packages.filter(p=>p.namespace===ns),"High")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Medium">{vulnCount(packages.filter(p=>p.namespace===ns),"Medium")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Low">{vulnCount(packages.filter(p=>p.namespace===ns),"Low")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Info">{vulnCount(packages.filter(p=>p.namespace===ns),"Info")}</Button>
-              </ButtonGroup>
+              <div>
+                <VulnCounts
+                  critical={vulnCount(packages.filter(p=>p.namespace===ns),"Critical")}
+                  high={vulnCount(packages.filter(p=>p.namespace===ns),"High")}
+                  medium={vulnCount(packages.filter(p=>p.namespace===ns),"Medium")}
+                  low={vulnCount(packages.filter(p=>p.namespace===ns),"Low")}
+                  info={vulnCount(packages.filter(p=>p.namespace===ns),"Info")}
+                />
               </div>
               <div>package namespace:&nbsp;<strong>{ns}</strong></div>
             </AccordionSummary>
@@ -297,13 +324,13 @@ function ScanResults(props) {
           <Accordion>
             <AccordionSummary>
               <div>
-              <ButtonGroup sx={{marginRight:'1em'}}>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Critical">{vulnCount(layer.packages,"Critical")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-High">{vulnCount(layer.packages,"High")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Medium">{vulnCount(layer.packages,"Medium")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Low">{vulnCount(layer.packages,"Low")}</Button>
-                <Button variant="contained" className="btn-cve-layer btn-cve-Info">{vulnCount(layer.packages,"Info")}</Button>
-              </ButtonGroup>
+                <VulnCounts 
+                  critical={vulnCount(layer.packages,"Critical")}
+                  high={vulnCount(layer.packages,"High")}
+                  medium={vulnCount(layer.packages,"Medium")}
+                  low={vulnCount(layer.packages,"Low")}
+                  info={vulnCount(layer.packages,"Info")}
+                />
               </div>
               <div>{layer.created_by}</div>
             </AccordionSummary>

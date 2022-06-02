@@ -28,10 +28,10 @@ LABEL org.opencontainers.image.title="lacework-docker-extension" \
     org.opencontainers.image.vendor="Lacework Inc." \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.extension.screenshots="" \
-    com.docker.extension.detailed-description="" \
+    com.docker.extension.detailed-description="Lacework Inline Scanner extension for Docker Desktop" \
     com.docker.extension.publisher-url="https://www.lacework.com" \
     com.docker.extension.additional-urls="https://github.com/l6khq/lacework-docker-extension" \
-    com.docker.extension.changelog=""
+    com.docker.extension.changelog="https://github.com/l6khq/lacework-docker-extension/releases"
 
 # COPY --from=builder /backend/bin/service /
 # COPY docker-compose.yaml .

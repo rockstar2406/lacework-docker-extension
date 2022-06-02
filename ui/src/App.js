@@ -17,6 +17,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ConfigToken from "./Components/ConfigToken";
 import Utils from './Components/Utils';
 import Release from "./Components/Release";
+import BugReportIcon from '@mui/icons-material/BugReport';
 const utils = new Utils();
 
 const client = createDockerDesktopClient();
@@ -39,16 +40,16 @@ function App() {
   let [scanResult,setScanResult] = useState({});
   
   async function getConfig() {
-    let cmd = "lw-scanner";
-    if(await isWindows()) cmd="lw-scanner.exe";
+    let cmd = "run.sh"; // replaces lw-scanner
+    if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
     let output = await ddClient.extension.host.cli.exec(cmd,["configure","view"]);
     setConfig(JSON.parse(output.stdout.replace("Current config :","")));
   }
   
   useEffect(() => {
     async function getVersion() {
-      let cmd = "lw-scanner";
-      if(await isWindows()) cmd="lw-scanner.exe";
+      let cmd = "run.sh"; // replaces lw-scanner
+      if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
       let output = await ddClient.extension.host.cli.exec(cmd,["version"]);
       let scannerVersion = output.stdout.match(/scanner version: ([0-9.]+)/);
       if(scannerVersion) {
@@ -61,8 +62,8 @@ function App() {
     }
     getVersion();
     async function getConfig() {
-      let cmd = "lw-scanner";
-      if(await isWindows()) cmd="lw-scanner.exe";
+      let cmd = "run.sh"; // replaces lw-scanner
+      if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
       let output = await ddClient.extension.host.cli.exec(cmd,["configure","view"]);
       console.log(output,JSON.parse(output.stdout.replace("Current config :","")));
       setConfig(JSON.parse(output.stdout.replace("Current config :","")));
@@ -82,8 +83,8 @@ function App() {
     try {
       setView("scan");
       setBlockScreen(true);
-      let cmd = "lw-scanner";
-      if(await isWindows()) cmd="lw-scanner.exe";
+      let cmd = "run.sh"; // replaces lw-scanner
+      if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
       const result = await ddClient.extension.host.cli.exec(cmd,["evaluate",tag.split(":")[0],tag.split(":")[1],'-v=false']);
       setBlockScreen(false);
       utils.telemetry({event:"scan",message:"success"})
@@ -124,7 +125,17 @@ function App() {
               <img className="logo_front" src={matchMedia("(prefers-color-scheme: dark")?.matches?logoLight:logoDark} alt="" />
             </div>
             <div className={"hide-"+view}>Lacework Scanner Version: {version}</div>
-            <div className="chip-github"><Link href="https://github.com/l6khq/lacework-docker-extension"><Chip icon={<GitHubIcon />} label="l6khq/lacework-docker-extension" variant="outlined" /></Link></div>
+            <div className="chips-top">
+              <Link href="https://github.com/l6khq/lacework-docker-extension">
+                <Chip icon={<GitHubIcon />} 
+                  label="l6khq/lacework-docker-extension" variant="outlined" />
+              </Link>
+              &nbsp;
+              <Link href="">
+                <Chip icon={<BugReportIcon />}
+                  label="GitHub Issues" variant="outlined" />
+              </Link>
+            </div>
             <ConfigToken onSuccess={getConfig} />
             <Release />
           </Box>
@@ -142,8 +153,18 @@ function App() {
             <img className="logo_front" src={matchMedia("(prefers-color-scheme: dark")?.matches?logoLight:logoDark} alt="" />
           </div>
           <div className={"hide-"+view}>Lacework Scanner Version: {version}</div>
-          <div className="chip-github"><Link href="https://github.com/l6khq/lacework-docker-extension"><Chip icon={<GitHubIcon />} label="l6khq/lacework-docker-extension" variant="outlined" /></Link></div>
-          <h2 className={"hide-"+view}>Container image scanning powered by Lacework's lw-scanner</h2>
+          <div className="chips-top">
+            <Link href="https://github.com/l6khq/lacework-docker-extension">
+              <Chip icon={<GitHubIcon />} 
+                label="l6khq/lacework-docker-extension" variant="outlined" />
+            </Link>
+            &nbsp;
+            <Link href="">
+              <Chip icon={<BugReportIcon />}
+                label="GitHub Issues" variant="outlined" />
+            </Link>
+          </div>
+          <h2 className={"hide-"+view}>Scan container images using Lacework Inline Scanner</h2>
           <div className={"hide-"+view}>Either choose on the images already pulled by docker, or specify a new one for docker to pull.</div>
           <ImageSearch onChange={handleScan}/>
           <Button onClick={handleReset}>reset lw-scanner configuration</Button>
