@@ -1,7 +1,7 @@
 FROM busybox AS lwscanner
-RUN wget -O /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/latest/download/lw-scanner-darwin-amd64
-RUN wget -O /lw-scanner-linux https://github.com/lacework/lacework-vulnerability-scanner/releases/latest/download/lw-scanner-linux-amd64
-RUN wget -O /lw-scanner-windows https://github.com/lacework/lacework-vulnerability-scanner/releases/latest/download/lw-scanner-windows-amd64.exe
+RUN wget -O /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-darwin-amd64
+RUN wget -O /lw-scanner-linux https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-linux-amd64
+RUN wget -O /lw-scanner-windows https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-windows-amd64.exe
 RUN chmod a+x /lw-scanner*
 
 FROM --platform=$BUILDPLATFORM node:17.7-alpine3.14 AS client-builder
