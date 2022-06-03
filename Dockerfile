@@ -34,7 +34,7 @@ LABEL org.opencontainers.image.title="lacework-scanner" \
     com.docker.extension.screenshots='[{"alt":"Lacework Scanner","url":"https://raw.githubusercontent.com/l6khq/lacework-docker-extension/main/lacework-docker-extension.png"}]' \
     com.docker.extension.detailed-description="Lacework Inline Scanner extension for Docker Desktop" \
     com.docker.extension.publisher-url="https://www.lacework.com" \
-    com.docker.extension.additional-urls='[{"title":"GitHub Repo","url":"https://github.com/l6khq/lacework-docker-extension"},{"title":"Support","https://github.com/l6khq/lacework-docker-extension/issues"}]' \
+    com.docker.extension.additional-urls='[{"title":"GitHub Repo","url":"https://github.com/l6khq/lacework-docker-extension"},{"title":"Support","url":"https://github.com/l6khq/lacework-docker-extension/issues"}]' \
     com.docker.extension.changelog="https://github.com/l6khq/lacework-docker-extension/releases"
 
 # COPY --from=builder /backend/bin/service /
