@@ -59,4 +59,3 @@ jobs:
           HONEYCOMB_TEAM=${{ secrets.HONEYCOMB_TEAM }}
           HONEYCOMB_DATASET=${{ secrets.HONEYCOMB_DATASET }}
         tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
