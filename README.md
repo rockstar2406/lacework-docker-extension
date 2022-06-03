@@ -45,7 +45,7 @@ The image on docker hub collects the following metrics
 # License and Copyright
 License and copyright is for contents within this repository only.
 
-Copyright 2021, Lacework Inc.
+Copyright 2022, Lacework Inc.
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
