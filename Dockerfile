@@ -1,9 +1,10 @@
 FROM alpine AS lwscanner
 RUN apk add --no-cache curl 
 ARG TARGETARCH
-RUN curl -fSsLo /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-darwin-$TARGETARCH && \
+## only linux has an arm and arm64 release available
+RUN curl -fSsLo /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-darwin-amd64 && \
     curl -fSsLo /lw-scanner-linux https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-linux-$TARGETARCH && \
-    curl -fSsLo /lw-scanner.exe https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-windows-$TARGETARCH.exe && \
+    curl -fSsLo /lw-scanner.exe https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-windows-amd64.exe && \
     chmod a+x /lw-scanner-*
 
 FROM --platform=$BUILDPLATFORM node:17.7-alpine3.14 AS client-builder
