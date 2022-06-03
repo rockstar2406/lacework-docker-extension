@@ -36,17 +36,26 @@ jobs:
           type=ref,event=tag
           type=ref,event=branch
           type=ref,event=pr
-          type=semver,pattern=v{{version}}
-          type=semver,pattern=v{{major}}.{{minor}}
-          
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      with:
+        image: tonistiigi/binfmt:latest
+        platforms: arm64,arm
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
     - name: Build and Push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v3
       with:
         context: .
+        platforms: linux/amd64,linux/arm64
         push: true
         build-args: |
           RELEASE=${{ steps.version.outputs.version }}
           HONEYCOMB_TEAM=${{ secrets.HONEYCOMB_TEAM }}
           HONEYCOMB_DATASET=${{ secrets.HONEYCOMB_DATASET }}
         tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
