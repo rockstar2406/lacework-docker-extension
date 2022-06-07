@@ -21,11 +21,9 @@ function ImageSearch(props) {
   async function getImages() {
     setLoading(true);
     let images = await ddClient.docker.listImages();
-    console.log(images);
     images = images.filter(i=>i.RepoTags).filter(image => image.RepoTags[0])
     .filter(image => image.RepoTags[0]!=="<none>:<none>")
     .map(image => image.RepoTags[0])
-    console.log(images);
     setImages(images);
     setLoading(false);
   }
@@ -61,6 +59,7 @@ function ImageSearch(props) {
         </Box>
         <Box>
           <Button variant="contained" style={{height:'100%', fontSize: '1.2em'}}
+            disabled={!image}
             onClick={handleScan}
           >Scan Image</Button>
         </Box>
