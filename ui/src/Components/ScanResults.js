@@ -310,19 +310,19 @@ function ScanResults(props) {
               <div><Typography>package namespace:&nbsp;<strong>{ns}</strong></Typography></div>
             </AccordionSummary>
             <AccordionDetails>
-              <table cellSpacing={0} cellPadding={2} style={{width:'100%'}}>
+              <table cellSpacing={0} cellPadding={2} style={{width:'100%'}} className="cve-pkg-table">
                 <thead>
                 <tr>
-                  <th className="cve-th-left"><Typography>Package</Typography></th>
-                  <th className="cve-th-left"><Typography>CVEs</Typography></th>
-                  <th className="cve-th-left"><Typography>Fix Versions</Typography></th>
+                  <th className="cve-pkg-th-left"><Typography sx={{fontWeight: 'bold'}}>Package</Typography></th>
+                  <th className="cve-pkg-th-left"><Typography sx={{fontWeight: 'bold'}}>CVEs</Typography></th>
+                  <th className="cve-pkg-th-left"><Typography sx={{fontWeight: 'bold'}}>Fix Versions</Typography></th>
                 </tr>
                 </thead>
                 <tbody>
                 {packages.filter(p=>p.namespace===ns).filter(p=>p.vulnerabilities.filter(useFilter).length>0)
                   .sort(sortPkgVulnCount).map(pkg => (
                   <tr key={pkg.name} className="odd-even-highlight">
-                    <td className="nowrap">{pkg.name}</td>
+                    <td className="nowrap" style={{paddingLeft: 8, paddingRight: 8}}><Typography>{pkg.name}</Typography></td>
                     <td>{pkg.vulnerabilities.sort(sortSeverity).filter(useFilter).map(v=>(<Button key={v.name} variant="contained" className={"btn-pkg-cve btn-cve btn-cve-"+v.severity}  onClick={()=>showVulnerability(v)}>
                       {v.name}
                     </Button>))}</td>
