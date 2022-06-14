@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Tab, Tabs, Modal, Typography } from "@mui/material";
+import { Box, Button, ButtonGroup, Tab, Tabs, Modal, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useEffect, useState } from "react";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -375,7 +375,26 @@ function ScanResults(props) {
         ))}
       </Box>
 
-      <Modal
+      <Dialog
+        open={cveDetailsOpen}
+        onClose={cveDetailsClose}
+      >
+        <DialogTitle className={"cve-"+cve?.severity}>{cve?.name}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Typography sx={{ mt: 2 }}>
+              {cve?.description?.split("\\\\n").map(t=><div>{t}</div>)}
+            </Typography>
+            <Typography sx={{paddingTop:'2em'}}>
+              For more details: <a href={cve?.link}>{cve?.link}</a>
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={cveDetailsClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      {/* <Modal
         open={cveDetailsOpen}
         onClose={cveDetailsClose}
         aria-labelledby="modal-modal-title"
@@ -395,7 +414,7 @@ function ScanResults(props) {
             For more details: <a href={cve?.link}>{cve?.link}</a>
           </Typography>
         </Box>
-      </Modal>
+      </Modal> */}
     </Box>
   )
 }
