@@ -100,7 +100,6 @@
 .cve-tr:nth-child(even) {
   background-color: rgba(255,255,255,0.1)
 }
-
 .btn-cve {
   white-space: nowrap;
   margin: 4px !important;

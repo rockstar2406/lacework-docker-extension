@@ -313,7 +313,7 @@ function ScanResults(props) {
               </div>
             </AccordionSummary>
             <AccordionDetails>
-              <table cellSpacing={0} cellPadding={2} style={{width:'100%'}}>
+              <table cellSpacing={0} cellPadding={2} style={{width:'100%'}} className="cve-pkg-table">
                 <thead>
                 <tr>
                   <th className="cve-pkg-th-left"><Typography>Package</Typography></th>
