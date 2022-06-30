@@ -20,6 +20,10 @@
   flex: 0 1 auto;
   text-align: left;
   margin: 2em;
+  margin-bottom: 0em;
+}
+.search.scan>.btn-reset {
+  display: none;
 }
 .hide-scan {
   display: none;
@@ -177,7 +181,7 @@ tbody.odd-even-highlight>tr:nth-child(even) {
 }
 
 .image-select-input>div {
-  padding: 0 !important;
+  padding: 2px !important;
   padding-left: 1em !important;
   /*height: 3em;
   font-size: 1.2em;*/
@@ -206,5 +210,8 @@ tbody.odd-even-highlight>tr:nth-child(even) {
   word-break: break-all;
 }
 .pkg-summary>div {
-  align-items: center;
+  align-items: baseline;
+}
+.layers-summary>div {
+  align-items: baseline;
 }
