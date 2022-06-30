@@ -308,8 +308,8 @@ function ScanResults(props) {
                   info={vulnCount(packages.filter(p=>p.namespace===ns),"Info")}
                 />
               </div>
-              <div  style={{alignItems:'center'}}>
-                <Typography>package namespace:&nbsp;<strong>{ns}</strong></Typography>
+              <div>
+                <Typography sx={{fontSize: '1rem !important'}}>package namespace:&nbsp;<strong style={{fontWeight: 'bold'}}>{ns}</strong></Typography>
               </div>
             </AccordionSummary>
             <AccordionDetails>
@@ -343,7 +343,7 @@ function ScanResults(props) {
       <Box className="layers" role="tabpanel" hidden={2!==tab}>
         {results?.cve?.image?.image_layers.map(layer => (
           <Accordion key={layer?.hash}>
-            <AccordionSummary>
+            <AccordionSummary className="layers-summary">
               <div>
                 <VulnCounts 
                   critical={vulnCount(layer.packages,"Critical")}
@@ -356,7 +356,7 @@ function ScanResults(props) {
               <div className="word-break-all"><Typography>{layer.created_by}</Typography></div>
             </AccordionSummary>
             <AccordionDetails>
-              {layer.packages.length===0?"No vulnerabilities found!":null}
+              {layer.packages.length===0?<Typography>No vulnerabilities found!</Typography>:null}
               {layer.packages
               .filter(pkg => pkg.vulnerabilities.filter(useFilter).length>0)
               .map(pkg => (

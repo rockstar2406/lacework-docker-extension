@@ -200,7 +200,7 @@ function App() {
           <h2 className={"hide-"+view}>Scan container images using Lacework Inline Scanner</h2>
           <div className={"hide-"+view}>Either choose on the images already pulled by docker, or specify a new one for docker to pull.</div>
           <ImageSearch onChange={handleScan}/>
-          <Button onClick={handleReset}>reset extension configuration</Button>
+          <Button onClick={handleReset} className="btn-reset">reset extension configuration</Button>
         </Box>
         {renderScanResults()}
         <Release />
