@@ -127,7 +127,7 @@ function App() {
       }
       utils.telemetry({event:"scan",message:"error",error:errmsg})
       setBlockScreen(false);
-      setScanResult({result:"error",error:errmsg});
+      setScanResult({result:"error",error:errmsg,stdout:e?.stdout,stderr:e?.stderr});
     }
   }
 
