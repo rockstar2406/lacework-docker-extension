@@ -96,6 +96,7 @@ function App() {
 
   async function handleScan(tag) {
     //console.log('scanning ',tag);
+    let result = {}
     try {
       setView("scan");
       setBlockScreen(true);
@@ -103,7 +104,7 @@ function App() {
       if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
       let cancelScan = false;
       window.cancelScan = () => cancelScan=true;
-      const result = await ddClient.extension.host.cli.exec(cmd,["evaluate",tag.split(":")[0],tag.split(":")[1],'-v=false']);
+      result = await ddClient.extension.host.cli.exec(cmd,["evaluate",tag.split(":")[0],tag.split(":")[1],'-v=false']);
       if(cancelScan) return;
       setBlockScreen(false);
       utils.telemetry({event:"scan",message:"success"})
@@ -127,7 +128,7 @@ function App() {
       }
       utils.telemetry({event:"scan",message:"error",error:errmsg})
       setBlockScreen(false);
-      setScanResult({result:"error",error:errmsg,stdout:e?.stdout,stderr:e?.stderr});
+      setScanResult({result:"error",error:errmsg,stdout:e?.stdout||result?.stdout,stderr:e?.stderr||result?.stderr});
     }
   }
 
