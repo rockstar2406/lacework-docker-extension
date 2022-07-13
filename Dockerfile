@@ -2,9 +2,9 @@ FROM alpine AS lwscanner
 RUN apk add --no-cache curl 
 ARG TARGETARCH
 ## only linux has an arm and arm64 release available
-RUN curl -fSsLo /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-darwin-amd64 && \
-    curl -fSsLo /lw-scanner-linux https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-linux-$TARGETARCH && \
-    curl -fSsLo /lw-scanner.exe https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.3.2/lw-scanner-windows-amd64.exe && \
+RUN curl -fSsLo /lw-scanner-darwin https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.5.0/lw-scanner-darwin-amd64 && \
+    curl -fSsLo /lw-scanner-linux https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.5.0/lw-scanner-linux-$TARGETARCH && \
+    curl -fSsLo /lw-scanner.exe https://github.com/lacework/lacework-vulnerability-scanner/releases/download/v0.5.0/lw-scanner-windows-amd64.exe && \
     chmod a+x /lw-scanner-*
 
 FROM --platform=$BUILDPLATFORM node:17.7-alpine3.14 AS client-builder
@@ -27,7 +27,7 @@ RUN npm run build
 
 FROM alpine
 LABEL org.opencontainers.image.title="Lacework Scanner" \
-    org.opencontainers.image.description="Lacework Scanner integration for Docker Desktop." \
+    org.opencontainers.image.description="Lacework Scanner integration for Docker Desktop enables developers with the insights to secure build their containers and minimize the vulnerabilities before the images go into production." \
     org.opencontainers.image.vendor="Lacework Inc." \
     com.docker.desktop.extension.api.version=">= 0.2.3" \
     com.docker.desktop.extension.icon="https://raw.githubusercontent.com/l6khq/lacework-docker-extension/main/lacework_icon.svg" \
