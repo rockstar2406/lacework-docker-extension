@@ -189,8 +189,16 @@ function ScanResults(props) {
   if(Object.keys(results||{}).length<1) {
     if(props?.results?.result==="error") return (
       <Box className="scan_results">
-        <h3>Scan Error</h3>
-        <pre>{props.results.error}</pre>
+        <Typography variant="h3">Scan Error</Typography>
+        <Typography>{props.results.error}</Typography>
+        {props.results?.stderr?(<>
+          <Typography variant="h3">STDERR</Typography>
+          <pre className="code_output">{props.results?.stderr}</pre>
+        </>):null}
+        {props.results?.stdout?(<>
+          <Typography variant="h3">STDOUT</Typography>
+          <pre className="code_output">{props.results?.stdout||"...no output..."}</pre>
+        </>):null}
       </Box>
     )
     return (

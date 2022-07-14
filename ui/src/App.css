@@ -215,3 +215,8 @@ tbody.odd-even-highlight>tr:nth-child(even) {
 .layers-summary>div {
   align-items: baseline;
 }
+.code_output {
+  border: solid 1px gray;
+  padding: 4px;
+  white-space: break-spaces;
+}

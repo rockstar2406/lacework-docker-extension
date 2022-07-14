@@ -96,6 +96,7 @@ function App() {
 
   async function handleScan(tag) {
     //console.log('scanning ',tag);
+    let result = {}
     try {
       setView("scan");
       setBlockScreen(true);
@@ -103,11 +104,49 @@ function App() {
       if(await isWindows()) cmd="run.cmd"; //replaces lw-scanner.exe
       let cancelScan = false;
       window.cancelScan = () => cancelScan=true;
-      const result = await ddClient.extension.host.cli.exec(cmd,["evaluate",tag.split(":")[0],tag.split(":")[1],'-v=false']);
+      //if image@sha256:id
+      let stdout = [];
+      let stderr = [];
+      if(tag.match(/@sha256:/)) {
+      //else
+      } else {
+        result = await ddClient.extension.host.cli.exec(cmd,["evaluate",tag.split(":")[0],tag.split(":")[1],'-v=false'],{
+          stream: {
+            onOutput(data) {
+              if(data.stdout) {
+                console.log('stdout',data.stdout);
+                stdout += data.stdout; //.push(data.stdout);
+              } else if(data.stderr) {
+                console.log('stderr',data.stderr);
+                stderr += data.stderr; //stdout.push(data.stderr);
+              }
+            },
+            onError(error) {
+              throw error;
+            },
+            onClose(exitCode) {
+              console.log("Lacework scanner exited with exit code ", exitCode);
+              if(exitCode===0) {
+                if(cancelScan) return;
+                setBlockScreen(false);
+                setScanResult({result:"ok",results:JSON.parse(stdout)})
+              } else {
+                if(cancelScan) return;
+                setBlockScreen(false);
+                if(stderr.match(/ERROR: /)) {
+                  setScanResult({result:"error",error:stderr.match(/ERROR: (.*)/)[1]});
+                } else {
+                  setScanResult({result:"error",error:"exit code "+exitCode,stdout:stdout, stderr: stderr});
+                }
+              }
+            }
+          }
+        });
+      }
       if(cancelScan) return;
-      setBlockScreen(false);
+      // setBlockScreen(false);
       utils.telemetry({event:"scan",message:"success"})
-      setScanResult({result:"ok",results:JSON.parse(result.stdout)})
+      // setScanResult({result:"ok",results:JSON.parse(stdout)})
     } catch(e) {
       let errmsg = "";
       if(e.stderr==="" && e.stdout==="") {
@@ -127,7 +166,7 @@ function App() {
       }
       utils.telemetry({event:"scan",message:"error",error:errmsg})
       setBlockScreen(false);
-      setScanResult({result:"error",error:errmsg});
+      setScanResult({result:"error",error:errmsg,stdout:e?.stdout||result?.stdout,stderr:e?.stderr||result?.stderr});
     }
   }
 
