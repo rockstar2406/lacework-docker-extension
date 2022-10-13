@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $1 = "reset" ]; then
+if [ $1 == "reset" ]; then
   lw-scanner configure reset
   exit
 fi
